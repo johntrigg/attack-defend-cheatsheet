@@ -147,10 +147,30 @@ need to go to about:config, and add the port you want to acess, so it can be ove
 
 
 # Abusing LFI
-Grab /etc/passwd to enumerate users.
-Then we can try grabbing ssh keys, in /home/<user>/.ssh/id.rsa
 
 
+For Linux: 
+/etc/passwd
+/etc/shadow
+/etc/issue
+/etc/group
+/etc/ssh/ssh_config
+/etc/ssh/sshd_config
+/root/.ssh/id_rsa
+/root/.ssh/authorized_keys
+
+For windows:
+/home/user/.ssh/authorized_k
+eys
+/home/user/.ssh/id_rsa
+/boot.ini
+/autoexec.bat
+/windows/system32/drivers/et
+c/hosts
+/windows/repair/SAM
+/windows/panther/unattended.
+xml
+/windows/panther/unattend/u
 # Getting Files to/from Server
 
 Use a web server!
@@ -184,3 +204,10 @@ Put the below into a file named backdoor.php, and put it in one of the websites,
 https://pentestbook.six2dez.com/enumeration/ports
 
 https://www.revshells.com/
+
+# Ricing
+
+```https://www.reddit.com/r/unixporn/comments/11zuyx2/i3_porpol/```
+
+XFCE themes for Kali Desktop
+```https://www.xfce-look.org/p/1253385?ref=itsfoss.com```
