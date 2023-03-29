@@ -221,7 +221,11 @@ https://www.revshells.com/
 
 # Ricing
 
-```https://www.reddit.com/r/unixporn/comments/11zuyx2/i3_porpol/```
+https://www.reddit.com/r/unixporn/comments/11zuyx2/i3_porpol/
 
 XFCE themes for Kali Desktop
-```https://www.xfce-look.org/p/1253385?ref=itsfoss.com```
+https://www.xfce-look.org/p/1253385?ref=itsfoss.com
+
+https://itsfoss.com/best-xfce-themes/
+
+Use mate terminal with more customization (blue on black background, with purple bold and accents)
