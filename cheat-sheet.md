@@ -148,30 +148,43 @@ need to go to about:config, and add the port you want to acess, so it can be ove
 
 # Abusing LFI
 
-
+```
 For Linux: 
 /etc/passwd
+
 /etc/shadow
+
 /etc/issue
+
 /etc/group
 /etc/hostname
-/etc/ssh/ssh_config
-/etc/ssh/sshd_config
-/root/.ssh/id_rsa
-/root/.ssh/authorized_keys
 
+/etc/ssh/ssh_config
+
+/etc/ssh/sshd_config
+
+/root/.ssh/id_rsa
+
+/root/.ssh/authorized_keys
+```
+
+```
 For windows:
-/home/user/.ssh/authorized_k
-eys
+/home/user/.ssh/authorized_keys
+
 /home/user/.ssh/id_rsa
+
 /boot.ini
+
 /autoexec.bat
-/windows/system32/drivers/et
-c/hosts
+
+/windows/system32/drivers/etc/hosts
+
 /windows/repair/SAM
-/windows/panther/unattended.
-xml
-/windows/panther/unattend/u
+
+/windows/panther/unattended.xml
+
+```
 # Getting Files to/from Server
 
 Use a web server!
