@@ -154,6 +154,7 @@ For Linux:
 /etc/shadow
 /etc/issue
 /etc/group
+/etc/hostname
 /etc/ssh/ssh_config
 /etc/ssh/sshd_config
 /root/.ssh/id_rsa
