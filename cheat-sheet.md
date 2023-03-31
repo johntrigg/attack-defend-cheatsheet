@@ -257,3 +257,16 @@ https://www.xfce-look.org/p/1253385?ref=itsfoss.com
 https://itsfoss.com/best-xfce-themes/
 
 Use mate terminal with more customization (blue on black background, with purple bold and accents)
+
+# Using Parrot
+
+I use Parrot becuase it looks better, but it doesn't come with some of the tools Kali does (namely searchsploit), so this is a good time to go over manually installing binaries.
+
+```
+cd /opt/
+sudo git clone https://gitlab.com/exploit-database/exploitdb.git
+sudo cp /opt/exploitdb/searchsploit /bin/searchsploit
+```
+
+
+
