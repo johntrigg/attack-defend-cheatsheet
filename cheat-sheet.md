@@ -25,6 +25,10 @@ You can also run dirsearch on subdirectories (ie dirsearch website.com/api)
 
 # Relevant File System Commands
 
+```cut -d ":" -f 1 passwd.txt```
+
+Cut command is an easy way to parse a file. For example, this will take passwd.txt, "break" the file up, using ":" as a delimiter, and grab the first field (-f 1). This can be used to easily parse /etc/passwd and grab a list of usernames.
+
 ```grep -r 'looking_for_this' /in/this/directory```
 
 We want to find the text 'looking for this', in a certain directory. This is useful for finding out where a webpage is exactly. If you know that user www-data has a web page with the text "Welcome to our website!", you can search for that text, and find out where the webpage is. Once you know wher the webpages are hosted in the file system, you can manipulate them, edit them, put in a backdoor, among many things. 
@@ -59,6 +63,9 @@ Open burpsuite, open an image file that only contains the backdoor, capture the 
 
 Can also just try uploading an image file that contains only the backdoor, and if a php exec() exists, that might hit it and give us a backdoor.
 
+# Burpsuite Intruder
+
+There's always the possibility of taking a POST request, capturing it in Burpsuite, and using the intruder function with a short wordlist to test for vulnerabilities. A simple example of this is a SQL injection.
 # PHP Payloads for File Upload Vulnerability
 
 # Command Backdoor
@@ -119,6 +126,22 @@ https://www.quora.com/Does-Hydra-stop-when-a-password-is-found
 ```wpscan -U username --url http://website.com/wordpress -P /usr/share/wordlists/rockyou.txt```
 
 If we can grab wordpress admin credentials, we can pretty easily get a shell.
+
+# SQL Injection
+
+```admin' or '1'='1```
+
+# SQL Map
+
+Use Burpsuite to capture a POST, save that POST request to a file
+
+```sqlmap -r sql.req -p first_name --dump --tables```
+
+We can use Burpsuite as a proxy, and actually see the requests in action.
+
+```sqlmap --proxy=127.0.0.1:8080```
+
+Throwing that into a username field with anything as a password will cause a simple SQL injection, where you bypass authorization and login as an admin. Low hanging fruit.
 
 # PostGresSQL
 ```psql -h 10.10.10.10``` -u postgres default credentials are postgres and postgres
