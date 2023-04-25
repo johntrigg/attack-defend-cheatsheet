@@ -14,16 +14,24 @@ Try to match expressions: think of it as really complicated grep.
 # Reconnaissance
 https://tio.run/#
 
-```sudo nmap -sC -sV -v -p- 10.10.10.10 --min-rate 10000```
+To save time, find what ports are open, 
+
+```sudo nmap -p- 10.10.10.10```
+
+and then do a detailed scan.
+
+```sudo nmap -sC -sV -v -p 22,80,443,1227```
+
+```sudo nmap -sC -sV -v -p- --min-rate 10000 10.10.10.10```
 
 # Enumerating Directories with dirsearch
 ```ffuf -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/blog/indexFUZZ```
 
 Use FFUF to find the extensions.
 
-```dirsearch -w /usr/share/wordlists/dirb/common.txt -u 10.10.10.10 -e php,txt,html -f```
-```dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -u 10.10.10.10 -e php,txt,html -f```
-```dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.10.10.10 -e php,txt,html -f```
+```dirsearch -w /usr/share/wordlists/dirb/common.txt -e php,txt,html -f -u 10.10.10.10```
+```dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -e php,txt,html -f -u 10.10.10.10```
+```dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,txt,html -f -u 10.10.10.10 ```
 
 
 Use ffuf to detect extensions. That and these 3 dirsearch commands will enumerate everything you need on a website.
@@ -156,7 +164,7 @@ Throwing that into a username field with anything as a password will cause a sim
 ```psql -h 10.10.10.10``` -u postgres default credentials are postgres and postgres
 
 # MySQL
-```mysql -h 10.10.70.250 -u root -p```
+```mysql -u root -p -h 10.10.70.250```
 
 # FTP
 ftp 10.10.10.10 
@@ -299,6 +307,15 @@ cd /opt/
 sudo git clone https://gitlab.com/exploit-database/exploitdb.git
 sudo cp /opt/exploitdb/searchsploit /bin/searchsploit
 ```
+
+# Flask
+
+Uses endpoints to define things, these endpoints are words, do not dirsearch with extentsions
+
+# LFI to RCE
+
+Log poisoning
+
 
 
 
