@@ -16,7 +16,7 @@ https://tio.run/#
 
 To save time, find what ports are open, 
 
-```sudo nmap -p- 10.10.10.10```
+```sudo nmap -p- -v 10.10.10.10```
 
 and then do a detailed scan.
 
@@ -29,8 +29,8 @@ and then do a detailed scan.
 
 Use FFUF to find the extensions.
 
-```dirsearch -w /usr/share/wordlists/dirb/common.txt -e php,txt,html -f -u 10.10.10.10```
 ```dirsearch -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -e php,txt,html -f -u 10.10.10.10```
+```dirsearch -w /usr/share/wordlists/dirb/common.txt -e php,txt,html -f -u 10.10.10.10```
 ```dirsearch -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,txt,html -f -u 10.10.10.10 ```
 
 
