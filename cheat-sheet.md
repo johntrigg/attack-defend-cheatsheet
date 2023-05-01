@@ -129,6 +129,9 @@ To crack a SSH key
 ```ssh2john encrypted-id.rsa > id.rsa.john```
 ```john -w=/usr/share/wordlists/rockyou.txt id.rsa.john```
 
+For general hash cracking, you can tell john to run on a hash, without specifying a format. It might auto detect it.
+```john --wordlist=/usr/share/wordlists/rockyou.txt  hash1.txt```
+
 John stores results in ~/.john
 # Hydra
 ```hydra -L users.txt -u -P /usr/share/wordlists/rockyou.txt 10.10.10.10 ssh -s 2222 -V -t 64 -f```
