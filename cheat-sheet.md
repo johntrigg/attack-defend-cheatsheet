@@ -114,8 +114,6 @@ Looks for any SUID programs on the system.
 ```chmod +s /bin/bash```
 If we have command injection anywhere, we can simply plug this into wherever we have command injection, and everytime /bin/bash is called, we get a root shell.
 
-
-
 # Password Cracking
 
 # John The Ripper
